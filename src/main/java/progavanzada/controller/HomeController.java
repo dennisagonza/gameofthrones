@@ -29,9 +29,82 @@ import progavanzada.service.ITerritorioService;
 @Controller
 public class HomeController {
 	
-
 	@Autowired
 	private IDragonesService drag;
+	@Autowired
+	private IGuerreroService gr;
+	@Autowired
+	private ISubditoService sub;
+	@Autowired
+	private ITerritorioService ter;
+
+	@PostMapping(value = "/guardars")
+		public String GuardarP(@ModelAttribute Subdito subdito, BindingResult result, Model model) {
+			sub.guardar(subdito);
+			List<Subdito> s = sub.listarsubdito();
+			model.addAttribute("subdito", s);
+			return "home";
+
+		}
+
+		@PostMapping(value = "/guardarg")
+		public String GuardarP(@ModelAttribute Guerreros guerrero, BindingResult result, Model model) {
+			gr.guardar(guerrero);
+			List<Guerreros> g = gr.listarguerreros();
+			model.addAttribute("Guerreros", g);
+			return "home";
+
+		}
+
+		@PostMapping(value = "/guardart")
+		public String GuardarP(@ModelAttribute Territorio territorio, BindingResult result, Model model) {
+			ter.guardar(territorio);
+			List<Territorio> t = ter.listarterritorios();
+			model.addAttribute("Territorio", t);
+			return "home";
+
+		}
+
+		@PostMapping(value = "/guardard")
+		public String GuardarP(@ModelAttribute Dragones dragon, BindingResult result, Model model) {
+			drag.guardar(dragon);
+			List<Dragones> d = drag.listardragones();
+			model.addAttribute("Dragones", d);
+			return "home";
+
+		}
+
+		@RequestMapping(value = "/eliminard/{id}")
+		public String EliminarD(@PathVariable("id") int id, Model model) {
+			drag.eliminar(id);
+			List<Dragones> d = drag.listardragones();
+			model.addAttribute("Dragones", d);
+			return "home";
+		}
+
+		@RequestMapping(value = "/eliminars/{id}")
+		public String EliminarS(@PathVariable("id") int id, Model model) {
+			sub.eliminar(id);
+			List<Subdito> s = sub.listarsubdito();
+			model.addAttribute("Subdito", s);
+			return "home";
+		}
+
+		@RequestMapping(value = "/eliminart/{id}")
+		public String EliminarT(@PathVariable("id") int id, Model model) {
+			ter.eliminarporId(id);
+			List<Territorio> t = ter.listarterritorios();
+			model.addAttribute("Territorio", t);
+			return "home";
+		}
+
+		@RequestMapping(value = "/eliminarg/{id}")
+		public String EliminarG(@PathVariable("id") int id, Model model) {
+			gr.eliminar(id);
+			List<Guerreros> g = gr.listarguerreros();
+			model.addAttribute("Guerreros", g);
+			return "home";
+		}
 
 
 	
